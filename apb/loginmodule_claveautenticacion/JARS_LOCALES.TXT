@@ -1,0 +1,8 @@
+Hay que instalar estas librerías en el repositorio local de maven del usuario (mvn install) (/libsClave) 
+	- SamlEngine-1.1.0.jar
+	- Commons-1.4.0.jar
+
+Colocarse en directorio libsClave y ejecutar:
+
+mvn install:install-file -Dfile=Commons-1.4.2.jar -DpomFile=Commons-1.4.2.xml
+mvn install:install-file -Dfile=SamlEngine-1.1.0.jar  -DpomFile=SamlEngine-1.1.0.xml

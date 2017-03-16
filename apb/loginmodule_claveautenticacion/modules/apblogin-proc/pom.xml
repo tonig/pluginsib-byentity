@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                      http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<!-- Pom parent -->
+	<parent>
+		<groupId>es.apb.login</groupId>
+		<artifactId>apb-login</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+	
+	<!-- Artifact -->
+	<groupId>es.apb.login</groupId>
+	<artifactId>apblogin-proc</artifactId>
+	<version>${componente.version}</version>
+	<name>Capa de procesos</name>
+	<description>Capa de procesos</description>
+	<packaging>jar</packaging>
+	
+	<!--  Dependencias --> 
+	<dependencies>
+	   <!-- Dependencias internas (otros modulos)-->
+	   <dependency>
+	      <groupId>es.apb.login</groupId>
+	      <artifactId>apblogin-neg</artifactId>
+	      <version>${componente.version}</version>
+	      <type>jar</type>
+	   </dependency>   			
+	</dependencies>
+	
+	<build>
+
+		<!-- Nombre JAR -->
+		<finalName>apblogin-proc</finalName>
+
+		<plugins>
+			<!-- Opciones de compilacion -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<compilerVersion>${java.version}</compilerVersion>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+
+			<!-- Por defecto, siempre se añadira informacion en el MANIFEST.MF -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addClasspath>true</addClasspath>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<!-- Encoding resources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>

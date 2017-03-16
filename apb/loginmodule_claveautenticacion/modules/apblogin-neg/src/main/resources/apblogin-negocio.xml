@@ -1,0 +1,84 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd          
+	          http://www.springframework.org/schema/aop          
+	          http://www.springframework.org/schema/aop/spring-aop-3.0.xsd         
+	          http://www.springframework.org/schema/tx         
+	          http://www.springframework.org/schema/tx/spring-tx-3.0.xsd         
+	          http://www.springframework.org/schema/context         
+	          http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	          http://www.springframework.org/schema/jee 
+           	  http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+
+
+	<!-- Scans the classpath of this application for @Components to deploy as beans -->
+	<context:component-scan base-package="es.apb.login.negocio" />
+	
+	<!-- Anotaciones AOP -->
+	<context:annotation-config  />
+	<aop:aspectj-autoproxy />
+	
+	<!--  Anotaciones para tx -->
+	<tx:annotation-driven transaction-manager="transactionManager" order="2"/>	
+		 	  
+	
+	<!-- Configuracion -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+			<property name="location" value="file:#{systemProperties.appConfPath}/apblogin/apb-login.properties"/>
+	</bean>
+	<bean id="negocioModuleConfig" class="es.apb.login.negocio.ModuleConfig">
+		<property name="qaa" value="${qaa}" />
+		<property name="spId" value="${spId}" />
+		<property name="providerName" value="${providerName}" />
+		<property name="spSector" value="${spSector}" />		
+		<property name="spApplication" value="${spApplication}" />
+		<property name="pepsUrl" value="${pepsUrl}" />
+		<property name="returnUrlSistra" value="${returnUrl}" />
+		<property name="inicioUrlExterna" value="${inicioUrlExterna}" />
+		<property name="returnUrlExterna" value="${returnUrlExterna}" />
+		<property name="timeoutTicketExterna" value="${timeoutTicketExterna}" />
+		<property name="timeoutSesionExterna" value="${timeoutSesionExterna}" />
+		<property name="accesoClaveDeshabilitado" value="${deshabilitado}" />
+		<property name="accesoClaveSimulado" value="${simulado}" />					
+	</bean>
+
+	<!--  Conexion a datasource -->   
+	<jee:jndi-lookup id="dataSource" jndi-name="${db.datasource}" resource-ref="true"/> 			      
+     
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+         <property name="jpaVendorAdapter" ref="hibernateJpaAdapter" />
+        <property name="persistenceUnitName" value="apbLoginPU" />
+        <property name="packagesToScan" >
+            <list>
+                <value>es.apb.login.negocio.repository.model</value>
+            </list>
+        </property>
+
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+            </props>
+        </property> 
+    </bean>
+     
+    <bean id="hibernateJpaAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+			
+    <bean id="transactionManager" 
+    	class="org.springframework.orm.jpa.JpaTransactionManager">
+    	 <property name="entityManagerFactory" ref="entityManagerFactory" />
+   </bean>    		
+ 
+ 
+</beans>   

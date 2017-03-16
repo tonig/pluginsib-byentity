@@ -1,0 +1,258 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                      http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	
+	<description>APB Login</description>
+
+	<organization>
+		<name>APB</name>
+	</organization>
+
+	<!-- Artifact -->
+	<groupId>es.apb.login</groupId>
+	<artifactId>apb-login</artifactId>
+	<version>1.0.0</version>
+	<name>APB-Login</name>
+	<packaging>pom</packaging>
+
+	<!-- Propiedades generales -->
+	<properties>
+	
+		<componente.version>1.0.0</componente.version>
+		
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.6</java.version>
+		<log4j.version>1.2.16</log4j.version>
+		<slf4j.version>1.6.1</slf4j.version>
+		<aspectj.version>1.6.10</aspectj.version>
+		<cglib.version>2.2</cglib.version>
+		<asm.version>3.1</asm.version>
+		<commons-io-version>2.2</commons-io-version>
+		
+		<servlet-api.version>2.5</servlet-api.version>
+		
+		<spring.version>3.2.13.RELEASE</spring.version>
+		<spring.security.version>3.2.7.RELEASE</spring.security.version>
+		
+		<hibernate-core-version>3.6.10.Final</hibernate-core-version>
+		
+		<xerces.version>2.10.0</xerces.version>
+		
+		<cxf.version>2.4.10</cxf.version>
+		
+	</properties>
+	
+	<!--  Repositorio local para librerias externas (Clave)
+	<repositories>	    
+	    <repository>
+	        <id>repo.local</id>
+	        <name>repo-local</name>
+	        <url>file:${project.basedir}/repository-local</url>	        
+	    </repository>
+	</repositories>
+	-->
+	
+	<modules>
+		<!-- Modulos -->
+		<module>modules/apblogin-neg</module>
+		<module>modules/apblogin-proc</module>		
+		<module>modules/apblogin-web-front</module>		
+		<module>modules/apblogin-web-ws</module>
+		 
+		<!-- Ears -->
+		<module>packages/apblogin-web-front-ear</module>
+		<module>packages/apblogin-web-ws-ear</module>
+		
+	</modules>
+	
+		
+
+	<dependencies>
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		
+		<!-- AOP (capa de negocio) -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>${cglib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>asm</groupId>
+			<artifactId>asm</artifactId>
+			<version>${asm.version}</version>
+		</dependency>		
+		
+		<!-- Spring Dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>		
+		
+				
+		<!-- Commons -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io-version}</version>		
+		</dependency>
+		
+		<!-- Xerces -->
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>${xerces.version}</version>
+		</dependency>
+		
+				  
+		<!-- CXF -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-ws-security</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+			
+		<!-- Libs compilacion -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${servlet-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+		  <groupId>javax.servlet</groupId>
+		  <artifactId>jstl</artifactId>
+		  <version>1.2</version>
+		  <scope>runtime</scope>
+		</dependency>
+								    		  
+	</dependencies>
+	
+	
+</project>
+
+
+

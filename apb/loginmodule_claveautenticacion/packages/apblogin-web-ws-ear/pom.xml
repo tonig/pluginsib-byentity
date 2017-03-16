@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                      http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	
+	<!-- Artifact -->
+	<groupId>es.apb.login</groupId>
+	<artifactId>apblogin-web-ws-ear</artifactId> 
+	<packaging>ear</packaging> 
+	<name>EAR - Frontal web administracion</name> 
+	<version>1.0.0</version>
+	
+	<!-- De momento para war cambiamos el nombre final -->
+	<build>
+	   <plugins>     
+	   		<plugin>       
+		   		<artifactId>maven-ear-plugin</artifactId>       
+		   		<configuration>      
+		   			<earSourcesDirectory>${maven.ear.src}</earSourcesDirectory>    
+           			<resources> 
+						<resource> 
+								<targetPath>META-INF</targetPath>
+						 		<directory>META-INF</directory> 
+								<filtering>false</filtering> 
+						 </resource> 
+					</resources>
+					<resourcesDir>target/classes</resourcesDir>
+		   			<version>1.4</version>         
+		   			
+		   			<modules>
+             			<webModule>
+               				<groupId>es.apb.login</groupId>
+               				<artifactId>apblogin-ws</artifactId>
+               				<contextRoot>/apblogin-ws</contextRoot>
+             			</webModule>
+         			 </modules>
+		   			
+		   			
+		   			<generateApplicationXml>true</generateApplicationXml> 
+		   		</configuration>     
+	   		</plugin>     
+	   	</plugins>   
+	   	<finalName>apblogin-ws</finalName>
+	</build>
+	<dependencies>
+		<dependency>     
+			<groupId>es.apb.login</groupId>     
+			<artifactId>apblogin-ws</artifactId>     
+			<version>1.0.0</version>     
+			<type>war</type>   
+		</dependency> 
+	 </dependencies>
+	
+</project>
