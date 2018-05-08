@@ -1,0 +1,33 @@
+<!--  METER ESTE POLICY EN EL LOGIN-CONFIG DE JBOSS --> 
+ 
+ <application-policy name="seycon">
+	<authentication>
+						
+		<login-module code="es.apb.sistra.loginmodule.ClaveLoginModule" flag="sufficient">
+			<!-- Role todos: para personas -->
+			<module-option name="roleTothom">tothom</module-option>
+			<!-- Datasource tabla tickets -->
+			<module-option name="datasource">java:/es.caib.zonaper.db</module-option>
+			<!-- Timeout ticket (en segs) -->
+			<module-option name="timeoutTicket">30</module-option>
+			<!-- Timeout ticket (en minutos) -->
+			<module-option name="purgaTicket">60</module-option>			
+		</login-module>
+		
+		<login-module code="es.apb.sistra.loginmodule.LdapLoginModule" flag="sufficient">
+			<!-- Role todos: para personas -->
+			<module-option name="roleTothom">tothom</module-option>
+			<!-- Role procesos auto: no se asignara role tothom -->
+			<module-option name="roleAuto">STR_AUTO</module-option>
+			<!-- Usuario anonimo -->
+            <module-option name = "unauthenticatedIdentity">nobody</module-option>
+			<!-- LDAP AD -->
+			<module-option name = "url">ldap://prueba.organismo.local:389</module-option>
+			<!-- Dominio AD -->
+			<module-option name = "dominio">organismo.local</module-option>
+			<!-- Base busqueda -->
+			<module-option name = "searchBase">DC=organismo,DC=local</module-option>					
+        </login-module>
+
+	</authentication>
+</application-policy>
