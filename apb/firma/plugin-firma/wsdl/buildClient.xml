@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="buildClientFirmaAPB" basedir="." default="clienteV1">
+
+	<property name="home.dir" location="${basedir}/.."/>
+	<property name="output.dir" location="${home.dir}/output"/>
+	<property name="cxf.home" location ="${home.dir}/lib/cxf"/>
+	<property name="src.dir" location="${home.dir}/src"/>
+	<property name="wsdl.dir" location="${home.dir}/wsdl"/>
+	<property name="lib" value="${home.dir}/lib" />
+
+	<path id="cxf.classpath">
+		<fileset dir="${cxf.home}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${lib}">
+			<include name="*.jar" />
+			<exclude name="xerces*.jar"/>
+		</fileset>
+		<fileset dir="${lib}/jaxb">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="main">
+		<echo>
+			Para generar el cliente de una determinada versión hay que lanzar la tarea correspondiente	
+		</echo>
+	</target>
+
+	<target name="clienteV1">
+		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+
+			<arg value="-p"/>
+			<arg value="urn:es:apb:firma:ws:v1:firma=es.apb.sistra.plugins.firma.ws.apbfirma" />
+			
+			<arg value="-d" />
+			<arg value="${src.dir}" />
+			
+			
+			<!-- Metemos wsdllocation pero luego no se utiliza. Evitamos que se genere automaticamente con ruta local -->
+			<arg value="-wsdlLocation" />
+			<arg value="FirmaService.wsdl" />
+			
+			<arg value="${wsdl.dir}/FirmaService.wsdl" />
+			<classpath>
+				<path refid="cxf.classpath"/>
+			</classpath>
+		</java>
+	</target>
+</project>

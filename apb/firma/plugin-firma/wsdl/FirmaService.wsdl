@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:es:apb:firma:ws:v1:firma" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="FirmarService_v1_00" targetNamespace="urn:es:apb:firma:ws:v1:firma">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:es:apb:firma:ws:v1:firma" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:es:apb:firma:ws:v1:firma">
+<xs:element name="firmarRequest" type="tns:firmarRequest"/>
+<xs:element name="firmarResponse" type="tns:firmarResponse"/>
+<xs:element name="obtenerInfoCertificadoRequest" type="tns:obtenerInfoCertificadoRequest"/>
+<xs:element name="obtenerInfoCertificadoResponse" type="tns:obtenerInfoCertificadoResponse"/>
+<xs:element name="validarRequest" type="tns:validarRequest"/>
+<xs:element name="validarResponse" type="tns:validarResponse"/>
+<xs:complexType name="obtenerInfoCertificadoRequest">
+<xs:sequence>
+<xs:element minOccurs="0" name="peticion" type="tns:peticionObtenerInfoCertificado"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType final="extension restriction" name="peticionObtenerInfoCertificado">
+<xs:sequence>
+<xs:element minOccurs="0" name="certificadoB64" type="xs:string"/>
+<xs:element minOccurs="0" name="contenidoFirma" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="formatoFirma" type="tns:formatoFirma"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="obtenerInfoCertificadoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="respuesta" type="tns:respuestaObtenerInfoCertificado"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType final="extension restriction" name="respuestaObtenerInfoCertificado">
+<xs:sequence>
+<xs:element name="nif" type="xs:string"/>
+<xs:element name="nombreApellidos" type="xs:string"/>
+<xs:element name="certificadoB64" type="xs:string"/>
+<xs:element minOccurs="0" name="nifRepresentante" type="xs:string"/>
+<xs:element minOccurs="0" name="nombreApellidosRepresentante" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType final="extension restriction" name="wPropiedadesError">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="propiedadError" nillable="true" type="tns:wPropiedadError"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType final="extension restriction" name="wPropiedadError">
+<xs:sequence>
+<xs:element minOccurs="0" name="propiedad" type="xs:string"/>
+<xs:element minOccurs="0" name="valor" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="firmarRequest">
+<xs:sequence>
+<xs:element minOccurs="0" name="peticion" type="tns:peticionFirmar"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType final="extension restriction" name="peticionFirmar">
+<xs:sequence>
+<xs:element name="documento" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="aliasCertificado" type="xs:string"/>
+<xs:element minOccurs="0" name="formato" type="tns:formatoFirma"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="firmarResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="respuesta" type="tns:respuestaFirmar"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType final="extension restriction" name="respuestaFirmar">
+<xs:sequence>
+<xs:element minOccurs="0" name="firma" type="xs:base64Binary"/>
+<xs:element name="formato" type="tns:formatoFirma"/>
+<xs:element name="nif" type="xs:string"/>
+<xs:element name="nombreApellidos" type="xs:string"/>
+<xs:element name="certificadoB64" type="xs:string"/>
+<xs:element minOccurs="0" name="nifRepresentante" type="xs:string"/>
+<xs:element minOccurs="0" name="nombreApellidosRepresentante" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="validarRequest">
+<xs:sequence>
+<xs:element minOccurs="0" name="peticion" type="tns:peticionValidar"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType final="extension restriction" name="peticionValidar">
+<xs:sequence>
+<xs:element name="documento" type="xs:base64Binary"/>
+<xs:element name="firma" type="xs:base64Binary"/>
+<xs:element name="formato" type="tns:formatoFirma"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="validarResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="respuesta" type="tns:respuestaValidar"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType final="extension restriction" name="respuestaValidar">
+<xs:sequence>
+<xs:element name="resultado" type="xs:boolean"/>
+<xs:element minOccurs="0" name="descripcionError" type="xs:string"/>
+<xs:element minOccurs="0" name="nif" type="xs:string"/>
+<xs:element minOccurs="0" name="nombreApellidos" type="xs:string"/>
+<xs:element minOccurs="0" name="nifRepresentante" type="xs:string"/>
+<xs:element minOccurs="0" name="nombreApellidosRepresentante" type="xs:string"/>
+<xs:element minOccurs="0" name="certificadoB64" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="formatoFirma">
+<xs:restriction base="xs:string">
+<xs:enumeration value="CADES_DETACHED"/>
+<xs:enumeration value="XADES_DETACHED"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="ExcepcionWS" type="tns:ExcepcionWS"/>
+<xs:complexType name="ExcepcionWS">
+<xs:sequence>
+<xs:element name="codigoError" nillable="true" type="xs:string"/>
+<xs:element name="mensajeError" nillable="true" type="xs:string"/>
+<xs:element name="detalleError" nillable="true" type="xs:string"/>
+<xs:element name="propiedadesError" nillable="true" type="tns:wPropiedadesError"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="validar">
+    <wsdl:part element="tns:validarRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="firmar">
+    <wsdl:part element="tns:firmarRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validarResponse">
+    <wsdl:part element="tns:validarResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="obtenerInfoCertificado">
+    <wsdl:part element="tns:obtenerInfoCertificadoRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="obtenerInfoCertificadoResponse">
+    <wsdl:part element="tns:obtenerInfoCertificadoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="firmarResponse">
+    <wsdl:part element="tns:firmarResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="WException">
+    <wsdl:part element="tns:ExcepcionWS" name="WException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="FirmaWebService">
+    <wsdl:operation name="obtenerInfoCertificado">
+      <wsdl:input message="tns:obtenerInfoCertificado" name="obtenerInfoCertificado">
+    </wsdl:input>
+      <wsdl:output message="tns:obtenerInfoCertificadoResponse" name="obtenerInfoCertificadoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WException" name="WException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="firmar">
+      <wsdl:input message="tns:firmar" name="firmar">
+    </wsdl:input>
+      <wsdl:output message="tns:firmarResponse" name="firmarResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WException" name="WException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="validar">
+      <wsdl:input message="tns:validar" name="validar">
+    </wsdl:input>
+      <wsdl:output message="tns:validarResponse" name="validarResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WException" name="WException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="FirmarService_v1_00SoapBinding" type="tns:FirmaWebService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="obtenerInfoCertificado">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="obtenerInfoCertificado">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="obtenerInfoCertificadoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WException">
+        <soap:fault name="WException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="firmar">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="firmar">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="firmarResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WException">
+        <soap:fault name="WException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="validar">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="validar">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="validarResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WException">
+        <soap:fault name="WException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FirmarService_v1_00">
+    <wsdl:port binding="tns:FirmarService_v1_00SoapBinding" name="FirmaWebServiceImplPort">
+      <soap:address location="http://localhost:28080/apb-firma/services/FirmaService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
