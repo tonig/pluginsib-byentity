@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pluginsSTM" default="main">
+
+<property file="${basedir}/config.properties"/>
+<property name="projecte" value="${ant.project.name}"/>
+<property name="output.dir" location="${basedir}/output"/>
+<property name="moduls.dir" location="${basedir}/moduls"/>
+<property name="etc.dir" location="${basedir}/etc"/>		
+<property name="lib" value="lib"/>
+
+	
+<target name="main" depends="clean,checkJbossVersion,prepare,assemble"/>
+
+	
+<target name="checkJbossVersion">
+	<condition property="isJboss5">
+		<equals arg1="${jboss.version}" arg2="5.0"/>
+	</condition>
+	<condition property="isJboss3">
+		<equals arg1="${jboss.version}" arg2="3.2"/>
+	</condition>
+</target>		
+	
+<target name="clean" description="Destruye los directorios de trabajo">
+	<delete dir="output" quiet="yes" />
+	<antcall target="propagate">
+		<param name="task" value="clean"/>
+	</antcall>
+</target>
+
+<target name="prepare" description="Crea los directorios necesarios para la construcción de la aplicación">
+	<mkdir dir="${output.dir}" />
+	<mkdir dir="${output.dir}/product" />
+</target>	
+
+<target name="propagate">
+	<ant dir="${moduls.dir}/plugin-login/moduls" target="${task}" inheritall="false"/>	
+</target>
+	
+	
+<target name="assemble" description="assemble">
+	<antcall target="propagate">
+		<param name="task" value="main"/>
+	</antcall>
+</target>
+	
+</project>
