@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="loginmodule-clientCert" default="main">
+
+<property file="${basedir}/config.properties"/>
+<property name="projecte" value="${ant.project.name}"/>
+<property name="output.dir" location="${basedir}/output"/>
+<property name="moduls.dir" location="${basedir}/moduls"/>
+<property name="etc.dir" location="${basedir}/etc"/>		
+<property name="lib" value="lib"/>
+
+	
+<target name="main" depends="clean,checkJbossVersion,prepare,assemble"/>
+
+	
+<target name="checkJbossVersion">
+	<condition property="isJboss5">
+		<equals arg1="${jboss.version}" arg2="5.0"/>
+	</condition>
+	<condition property="isJboss3">
+		<equals arg1="${jboss.version}" arg2="3.2"/>
+	</condition>
+</target>		
+	
+<target name="clean" description="Destruye los directorios de trabajo">
+	<delete dir="output" quiet="yes" />
+	<antcall target="propagate">
+		<param name="task" value="clean"/>
+	</antcall>
+</target>
+
+<target name="prepare" description="Crea los directorios necesarios para la construcción de la aplicación">
+	<mkdir dir="${output.dir}" />
+	<mkdir dir="${output.dir}/etc" />
+	<mkdir dir="${output.dir}/moduls" />
+	<mkdir dir="${output.dir}/product" />
+</target>	
+
+<target name="propagate">
+	<ant dir="${moduls.dir}/plugin-login/moduls" target="${task}" inheritall="false"/>	
+</target>
+	
+	
+<target name="assemble" description="assemble ear">
+	<antcall target="propagate">
+		<param name="task" value="main"/>
+	</antcall>
+	
+	<copy file="${etc.dir}/application.xml" todir="${output.dir}/etc" overwrite="true"/>
+	<replace file="${output.dir}/etc/application.xml">
+	     <replacefilter token="@contextoRaiz@" value="${contextoRaiz}"/>
+	</replace>
+	
+	<delete file="${output.dir}/product/2-clientCert.ear" quiet="yes"/>
+	<ear earfile="${output.dir}/product/2-clientCert.ear" appxml="${output.dir}/etc/application.xml">
+		<manifest>
+			<attribute name="Created-By" value="${indra}"/>
+		    <attribute name="Specification-Title" value="${projecte}"/>				
+		    <attribute name="Specification-Version" value="${release.version} build${release.build} ${release.date}"/>
+		</manifest>
+		<metainf dir="${etc.dir}/jboss-${jboss.version}" includes="*.xml"/>			
+		<metainf dir="${etc.dir}" includes="cxf/org.apache.cxf.Logger"/>								
+		<zipfileset dir="${output.dir}/moduls">
+			<include name="clientCert-model.jar"/>
+			<include name="clientCert-persistence.jar"/>
+			<include name="clientCert-front.war"/>			
+		</zipfileset>
+	</ear>
+	<copy file="${output.dir}/moduls/clientCert-loginModule.jar" todir="${output.dir}/product/"/>			
+</target>
+</project>

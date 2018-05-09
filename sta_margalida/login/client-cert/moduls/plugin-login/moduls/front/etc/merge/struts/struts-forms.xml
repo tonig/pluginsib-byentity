@@ -1,0 +1,17 @@
+<form-bean
+    name="initForm"
+    type="es.sistra.clientcert.front.form.InitForm"/>
+    
+<form-bean
+    name="pagoForm"
+    type="es.sistra.clientcert.front.form.PagoForm"/>  
+    
+<form-bean
+    name="pagoTarjetaForm"
+    type="es.sistra.clientcert.front.form.PagoTarjetaForm"/>
+    
+<form-bean
+    name="pagoBancaForm"
+    type="es.sistra.clientcert.front.form.PagoBancaForm"/>
+     
+  

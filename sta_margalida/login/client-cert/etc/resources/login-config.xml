@@ -1,0 +1,24 @@
+<!--  METER ESTE POLICY EN EL LOGIN-CONFIG DE JBOSS --> 
+ 
+ <application-policy name="seycon">
+	<authentication>
+						
+		<login-module code="es.sistra.clientcert.ClientCertLoginModule" flag="sufficient">
+			<!-- Role todos: para personas -->
+			<module-option name="roleTothom">tothom</module-option>			
+			<!-- Timeout ticket (en segs) -->
+			<module-option name="timeoutTicket">30</module-option>
+			<!-- Timeout ticket (en minutos) -->
+			<module-option name="purgaTicket">60</module-option>		
+			<!-- Helper para crear principal personalizado -->
+			<module-option name="clientCertHelper">es.sistra.clientcert.loginmodule.ClientCertHelperMock</module-option>	
+		</login-module>
+		
+		<!-- 
+		
+			INCLUIR OTROS LOGIN MODULE DEL ORGANISMO (DATABASE, ETC.)
+		
+		 -->
+
+	</authentication>
+</application-policy>

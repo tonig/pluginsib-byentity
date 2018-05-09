@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="buildClientAFirma" basedir="." default="clienteV1">
+
+	<property name="home.dir" location="${basedir}/../../../"/>
+	<property name="output.dir" location="${home.dir}/output"/>
+	<property name="cxf.home" location ="${home.dir}/../../lib/cxf"/>
+	<property name="src.dir" location="${basedir}/../src"/>
+	<property name="wsdl.dir" location="${basedir}/../wsdl"/>
+	<property name="lib" value="${home.dir}/../../lib" />
+
+	<path id="cxf.classpath">
+		<fileset dir="${cxf.home}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${lib}">
+			<include name="*.jar" />
+			<exclude name="xerces*.jar"/>
+		</fileset>
+		<fileset dir="${lib}/jaxb">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="main">
+		<echo>
+			Para generar el cliente de una determinada versión hay que lanzar la tarea correspondiente	
+		</echo>
+	</target>
+
+	<target name="clienteV1">
+		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+
+			<arg value="-p"/>
+			<arg value="http://afirmaws/ws/validacion=es.sistra.clientcert.wsclient.afirma.model" />			
+			<arg value="-p"/>
+			<arg value="http://afirmaws/services/ValidarCertificado=es.sistra.clientcert.wsclient.afirma.services" />
+
+			<arg value="-d" />
+			<arg value="${src.dir}" />
+			
+			
+			<!-- Metemos wsdllocation pero luego no se utiliza. Evitamos que se genere automaticamente con ruta local -->
+			<arg value="-wsdlLocation" />
+			<arg value="ValidarCertificado.wsdl" />
+			
+			<arg value="${wsdl.dir}/ValidarCertificado.wsdl" />
+			<classpath>
+				<path refid="cxf.classpath"/>
+			</classpath>
+		</java>
+	</target>
+</project>
