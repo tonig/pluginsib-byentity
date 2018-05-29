@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=ISO-8859-1"%>
-<%@ page import="java.util.*, org.apache.struts.Globals, org.apache.catalina.authenticator.SavedRequest, es.caib.util.ConvertUtil" %>
+<%@ page import="java.util.*, org.apache.struts.Globals, es.apb.sistra.loginmodule.SavedRequest, es.caib.util.ConvertUtil" %>
 <%@ taglib prefix="bean" uri="http://jakarta.apache.org/struts/tags-bean"%>
 <%@ taglib prefix="html" uri="http://jakarta.apache.org/struts/tags-html"%>
 <%@ taglib prefix="logic" uri="http://jakarta.apache.org/struts/tags-logic"%>
